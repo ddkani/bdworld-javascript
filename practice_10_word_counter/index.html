@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>텍스트 분석기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>텍스트 분석기</h1>
+            <p>종합적인 텍스트 분석 및 글쓰기 인사이트</p>
+        </header>
+
+        <main class="main">
+            <div class="analyzer-layout">
+                <!-- 텍스트 입력 섹션 -->
+                <section class="text-input-section">
+                    <div class="section-header">
+                        <h2>텍스트 입력</h2>
+                        <div class="input-actions">
+                            <button class="action-btn" id="clearText">지우기</button>
+                            <button class="action-btn" id="pasteText">붙여넣기</button>
+                            <button class="action-btn" id="loadSample">샘플 로드</button>
+                        </div>
+                    </div>
+
+                    <div class="text-input-container">
+                        <textarea 
+                            id="textInput" 
+                            placeholder="분석할 텍스트를 여기에 입력하거나 붙여넣으세요..."
+                            spellcheck="true"
+                        ></textarea>
+                        
+                        <div class="input-footer">
+                            <div class="quick-stats">
+                                <span id="quickWordCount">0 단어</span>
+                                <span id="quickCharCount">0 글자</span>
+                            </div>
+                            <div class="input-controls">
+                                <button class="toggle-btn" id="toggleWrap">단어 랩</button>
+                                <button class="toggle-btn" id="toggleNumbers">행 번호</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 텍스트 가져오기/내보내기 -->
+                    <div class="file-operations">
+                        <input type="file" id="fileInput" accept=".txt,.md,.doc,.docx" style="display: none;">
+                        <button class="file-btn" id="importFile">📁 파일 가져오기</button>
+                        <button class="file-btn" id="exportText">💾 텍스트 내보내기</button>
+                        <button class="file-btn" id="exportReport">📊 보고서 내보내기</button>
+                    </div>
+                </section>
+
+                <!-- 통계 대시보드 -->
+                <section class="stats-section">
+                    <div class="section-header">
+                        <h2>텍스트 통계</h2>
+                        <div class="view-controls">
+                            <button class="view-btn active" data-view="basic">기본</button>
+                            <button class="view-btn" data-view="advanced">고급</button>
+                            <button class="view-btn" data-view="readability">가독성</button>
+                        </div>
+                    </div>
+
+                    <!-- 기본 통계 -->
+                    <div class="stats-view" id="basicStats">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">📝</div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="wordCount">0</div>
+                                    <div class="stat-label">단어</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">🔤</div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="charCount">0</div>
+                                    <div class="stat-label">글자</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">⭕</div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="charNoSpaces">0</div>
+                                    <div class="stat-label">글자 (공백 제외)</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">💬</div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="sentenceCount">0</div>
+                                    <div class="stat-label">문장</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">📄</div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="paragraphCount">0</div>
+                                    <div class="stat-label">단락</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">📏</div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="lineCount">0</div>
+                                    <div class="stat-label">행</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 고급 통계 -->
+                    <div class="stats-view" id="advancedStats" style="display: none;">
+                        <div class="advanced-grid">
+                            <div class="advanced-card">
+                                <h3>평균</h3>
+                                <div class="metric-list">
+                                    <div class="metric-item">
+                                        <span>문장당 단어 수:</span>
+                                        <span id="avgWordsPerSentence">0</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span>단어당 글자 수:</span>
+                                        <span id="avgCharsPerWord">0</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span>단락당 문장 수:</span>
+                                        <span id="avgSentencesPerParagraph">0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="advanced-card">
+                                <h3>단어 분석</h3>
+                                <div class="metric-list">
+                                    <div class="metric-item">
+                                        <span>고유 단어:</span>
+                                        <span id="uniqueWords">0</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span>가장 긴 단어:</span>
+                                        <span id="longestWord">-</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span>가장 짧은 단어:</span>
+                                        <span id="shortestWord">-</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="advanced-card">
+                                <h3>읽기 시간</h3>
+                                <div class="reading-time">
+                                    <div class="time-item">
+                                        <div class="time-icon">👁️</div>
+                                        <div class="time-content">
+                                            <div class="time-value" id="readingTime">0 min</div>
+                                            <div class="time-label">읽기 (분당 200단어)</div>
+                                        </div>
+                                    </div>
+                                    <div class="time-item">
+                                        <div class="time-icon">🗣️</div>
+                                        <div class="time-content">
+                                            <div class="time-value" id="speakingTime">0 min</div>
+                                            <div class="time-label">말하기 (분당 150단어)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="reading-speed-controls">
+                                    <label for="readingSpeed">읽기 속도 (분당 단어 수):</label>
+                                    <input type="range" id="readingSpeed" min="100" max="400" value="200">
+                                    <span id="readingSpeedValue">200</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 가독성 통계 -->
+                    <div class="stats-view" id="readabilityStats" style="display: none;">
+                        <div class="readability-grid">
+                            <div class="readability-card">
+                                <h3>가독성 점수</h3>
+                                <div class="score-item">
+                                    <div class="score-label">Flesch 읽기 용이성:</div>
+                                    <div class="score-value" id="fleschScore">-</div>
+                                    <div class="score-interpretation" id="fleschInterpretation">-</div>
+                                </div>
+                                <div class="score-item">
+                                    <div class="score-label">학년 수준:</div>
+                                    <div class="score-value" id="gradeLevel">-</div>
+                                </div>
+                            </div>
+
+                            <div class="readability-card">
+                                <h3>복잡도 분석</h3>
+                                <div class="complexity-meter">
+                                    <div class="complexity-label">텍스트 복잡도</div>
+                                    <div class="complexity-bar">
+                                        <div class="complexity-fill" id="complexityFill"></div>
+                                    </div>
+                                    <div class="complexity-levels">
+                                        <span>단순</span>
+                                        <span>보통</span>
+                                        <span>복잡</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 단어 빈도 섹션 -->
+                <section class="frequency-section">
+                    <div class="section-header">
+                        <h2>단어 빈도</h2>
+                        <div class="frequency-controls">
+                            <label>
+                                <input type="checkbox" id="excludeStopWords" checked>
+                                일반적인 단어 제외
+                            </label>
+                            <label>
+                                상위 보기:
+                                <select id="topWordsCount">
+                                    <option value="10">10</option>
+                                    <option value="20" selected>20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="frequency-container">
+                        <div class="frequency-list" id="frequencyList">
+                            <!-- 단어 빈도 항목이 여기에 삽입됩니다 -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 글쓰기 목표 섹션 -->
+                <section class="goals-section">
+                    <div class="section-header">
+                        <h2>글쓰기 목표</h2>
+                        <button class="action-btn" id="setGoal">새 목표 설정</button>
+                    </div>
+
+                    <div class="goals-container">
+                        <div class="goal-card" id="wordGoal">
+                            <h3>일일 단어 목표</h3>
+                            <div class="goal-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="wordGoalProgress"></div>
+                                </div>
+                                <div class="progress-text">
+                                    <span id="currentWords">0</span> / <span id="targetWords">500</span> 단어
+                                    (<span id="wordGoalPercentage">0%</span>)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="goal-card" id="timeGoal">
+                            <h3>글쓰기 세션</h3>
+                            <div class="session-timer">
+                                <div class="timer-display" id="sessionTimer">00:00</div>
+                                <div class="timer-controls">
+                                    <button class="timer-btn" id="startTimer">시작</button>
+                                    <button class="timer-btn" id="pauseTimer">일시정지</button>
+                                    <button class="timer-btn" id="resetTimer">리셋</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- 목표 설정 모달 -->
+        <div class="modal" id="goalModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>글쓰기 목표 설정</h2>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="goal-options">
+                        <div class="goal-option">
+                            <label for="dailyWordGoal">일일 단어 목표:</label>
+                            <input type="number" id="dailyWordGoal" value="500" min="1" max="10000">
+                        </div>
+                        <div class="goal-option">
+                            <label for="sessionTimeGoal">세션 시간 목표 (분):</label>
+                            <input type="number" id="sessionTimeGoal" value="25" min="1" max="480">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary">취소</button>
+                    <button class="btn-primary" id="saveGoal">목표 저장</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 플로팅 액션 버튼 -->
+        <button class="fab" id="analysisToggle" title="자동 분석 토글">
+            🔄
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

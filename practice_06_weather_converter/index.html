@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌡️ 온도 변환기</h1>
+            <p id="datetime"></p>
+        </header>
+        
+        <div class="converter-section">
+            <div class="input-group">
+                <label for="celsius">섭씨 (°C)</label>
+                <input type="number" id="celsius" placeholder="0" step="0.01">
+            </div>
+            
+            <div class="input-group">
+                <label for="fahrenheit">화씨 (°F)</label>
+                <input type="number" id="fahrenheit" placeholder="32" step="0.01">
+            </div>
+            
+            <div class="input-group">
+                <label for="kelvin">켈빈 (K)</label>
+                <input type="number" id="kelvin" placeholder="273.15" step="0.01">
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div class="temperature-gauge">
+                <div class="gauge-bar">
+                    <div id="gauge-fill" class="gauge-fill"></div>
+                </div>
+                <div class="gauge-labels">
+                    <span>-50°C</span>
+                    <span>0°C</span>
+                    <span>50°C</span>
+                    <span>100°C</span>
+                </div>
+            </div>
+            
+            <div class="status-cards">
+                <div class="status-card">
+                    <h3>물의 상태</h3>
+                    <div id="water-state" class="status-value">액체 💧</div>
+                </div>
+                
+                <div class="status-card">
+                    <h3>체감 온도</h3>
+                    <div id="feel-description" class="status-value">쾌적함</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="reference-section">
+            <h2>참고 온도표</h2>
+            <table class="reference-table">
+                <thead>
+                    <tr>
+                        <th>설명</th>
+                        <th>섭씨 (°C)</th>
+                        <th>화씨 (°F)</th>
+                        <th>켈빈 (K)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>절대영도</td>
+                        <td>-273.15</td>
+                        <td>-459.67</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>물의 어는점</td>
+                        <td>0</td>
+                        <td>32</td>
+                        <td>273.15</td>
+                    </tr>
+                    <tr>
+                        <td>실온</td>
+                        <td>20</td>
+                        <td>68</td>
+                        <td>293.15</td>
+                    </tr>
+                    <tr>
+                        <td>체온</td>
+                        <td>36.5</td>
+                        <td>97.7</td>
+                        <td>309.65</td>
+                    </tr>
+                    <tr>
+                        <td>물의 끓는점</td>
+                        <td>100</td>
+                        <td>212</td>
+                        <td>373.15</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="history-section">
+            <h3>변환 히스토리</h3>
+            <ul id="history-list"></ul>
+            <button id="clear-history" class="btn-secondary">히스토리 지우기</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

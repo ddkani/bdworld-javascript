@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Color Palette Generator</h1>
+            <p>스페이스바를 눌러 새로운 팔레트를 생성하세요</p>
+        </header>
+        
+        <div class="controls">
+            <button id="generateBtn" class="generate-btn">새 팔레트 생성</button>
+            
+            <div class="control-group">
+                <label for="colorCount">색상 개수:</label>
+                <select id="colorCount">
+                    <option value="3">3개</option>
+                    <option value="4">4개</option>
+                    <option value="5" selected>5개</option>
+                    <option value="6">6개</option>
+                    <option value="7">7개</option>
+                    <option value="8">8개</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="colorMode">색상 모드:</label>
+                <select id="colorMode">
+                    <option value="random">랜덤</option>
+                    <option value="pastel">파스텔</option>
+                    <option value="dark">다크</option>
+                    <option value="vibrant">비비드</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="palette" class="palette"></div>
+        
+        <div class="saved-palettes">
+            <h2>저장된 팔레트</h2>
+            <div id="savedList" class="saved-list"></div>
+        </div>
+    </div>
+    
+    <div id="toast" class="toast"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

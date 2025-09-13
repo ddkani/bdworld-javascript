@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비밀번호 검증기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>비밀번호 강도 검증기</h1>
+            <p>실시간 피드백으로 안전한 비밀번호를 만들어보세요</p>
+        </header>
+
+        <main>
+            <div class="password-form">
+                <div class="input-group">
+                    <label for="password">비밀번호 입력:</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="강력한 비밀번호를 만드세요">
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle class="eye-open" cx="12" cy="12" r="3"/>
+                                <path class="eye-closed" d="m9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+                                <path class="eye-closed" d="m21.87 21.87l-19-19"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="strength-meter">
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText">비밀번호를 입력하여 강도를 확인하세요</div>
+                </div>
+
+                <div class="requirements">
+                    <h3>비밀번호 요구사항:</h3>
+                    <ul class="requirements-list">
+                        <li class="requirement" id="lengthReq">
+                            <span class="req-icon">✗</span>
+                            <span class="req-text">최소 8자 이상</span>
+                        </li>
+                        <li class="requirement" id="uppercaseReq">
+                            <span class="req-icon">✗</span>
+                            <span class="req-text">대문자 1개 이상 (A-Z)</span>
+                        </li>
+                        <li class="requirement" id="lowercaseReq">
+                            <span class="req-icon">✗</span>
+                            <span class="req-text">소문자 1개 이상 (a-z)</span>
+                        </li>
+                        <li class="requirement" id="numberReq">
+                            <span class="req-icon">✗</span>
+                            <span class="req-text">숫자 1개 이상 (0-9)</span>
+                        </li>
+                        <li class="requirement" id="specialReq">
+                            <span class="req-icon">✗</span>
+                            <span class="req-text">특수문자 1개 이상 (!@#$%^&*)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="password-tips">
+                    <h3>강력한 비밀번호를 위한 팁:</h3>
+                    <ul>
+                        <li>문자, 숫자, 기호를 조합하여 사용하세요</li>
+                        <li>일반적인 단어와 개인정보는 피하세요</li>
+                        <li>최고의 보안을 위해 최소 12자 이상으로 만드세요</li>
+                        <li>각 계정마다 고유한 비밀번호를 사용하세요</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

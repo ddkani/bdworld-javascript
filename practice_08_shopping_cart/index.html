@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쇼핑카트</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">쇼핑카트</h1>
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="상품 검색...">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="cart-toggle">
+                    <button id="cartToggle" class="cart-btn">
+                        🛒 카트 (<span id="cartCount">0</span>)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="app-layout">
+                <!-- Product Filters -->
+                <aside class="filters">
+                    <h3>카테고리</h3>
+                    <div class="filter-group">
+                        <label class="filter-option">
+                            <input type="radio" name="category" value="all" checked>
+                            <span>전체 상품</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="category" value="electronics">
+                            <span>전자기기</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="category" value="clothing">
+                            <span>의류</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="category" value="books">
+                            <span>도서</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="category" value="home">
+                            <span>홈&가든</span>
+                        </label>
+                    </div>
+                    
+                    <h3>가격대</h3>
+                    <div class="price-filter">
+                        <input type="range" id="priceRange" min="0" max="1000" value="1000">
+                        <div class="price-display">
+                            최대 $<span id="priceValue">1000</span>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Product Grid -->
+                <section class="products-section">
+                    <div class="section-header">
+                        <h2>상품</h2>
+                        <div class="view-options">
+                            <button class="view-btn active" data-view="grid">⊞</button>
+                            <button class="view-btn" data-view="list">≡</button>
+                        </div>
+                    </div>
+                    
+                    <div id="productsGrid" class="products-grid">
+                        <!-- 상품들이 여기에 동적으로 로드됩니다 -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>쇼핑카트</h2>
+            <button id="closeCart" class="close-btn">×</button>
+        </div>
+        
+        <div class="cart-content">
+            <div id="cartItems" class="cart-items">
+                <!-- 카트 상품들이 여기에 표시됩니다 -->
+            </div>
+            
+            <div class="cart-empty" id="cartEmpty">
+                <p>카트가 비어있습니다</p>
+                <button class="continue-shopping">계속 쇼핑하기</button>
+            </div>
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>소계:</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>세금 (8.5%):</span>
+                    <span id="tax">$0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>총액:</span>
+                    <span id="total">$0.00</span>
+                </div>
+            </div>
+            
+            <div class="cart-actions">
+                <button id="clearCart" class="btn btn-secondary">카트 비우기</button>
+                <button id="checkout" class="btn btn-primary">결제하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>주문 요약</h2>
+                <button class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="orderSummary"></div>
+                <div class="customer-info">
+                    <h3>고객 정보</h3>
+                    <form id="checkoutForm">
+                        <input type="text" placeholder="성명" required>
+                        <input type="email" placeholder="이메일" required>
+                        <input type="tel" placeholder="전화번호" required>
+                        <textarea placeholder="배송 주소" required></textarea>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary">취소</button>
+                <button class="btn btn-primary" id="placeOrder">주문하기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Quiz Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="startScreen" class="screen">
+            <h1>JavaScript Quiz Game</h1>
+            <p class="subtitle">JavaScript 지식을 테스트해보세요!</p>
+            
+            <div class="difficulty-select">
+                <h2>난이도 선택</h2>
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn" data-difficulty="easy">
+                        <span class="emoji">😊</span>
+                        <span>쉬움</span>
+                    </button>
+                    <button class="difficulty-btn" data-difficulty="medium">
+                        <span class="emoji">🤔</span>
+                        <span>보통</span>
+                    </button>
+                    <button class="difficulty-btn" data-difficulty="hard">
+                        <span class="emoji">🔥</span>
+                        <span>어려움</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="high-score">
+                최고 점수: <span id="highScore">0</span>점
+            </div>
+            
+            <button id="startBtn" class="btn-primary" disabled>게임 시작</button>
+        </div>
+        
+        <div id="gameScreen" class="screen hidden">
+            <div class="game-header">
+                <div class="progress-info">
+                    <span>문제 <span id="currentQuestion">1</span> / <span id="totalQuestions">10</span></span>
+                    <span class="score">점수: <span id="score">0</span></span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <div class="timer">
+                    <span id="timeLeft">30</span>초
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <h2 id="questionText" class="question-text"></h2>
+                <div id="optionsContainer" class="options-container"></div>
+            </div>
+            
+            <div id="feedback" class="feedback hidden"></div>
+        </div>
+        
+        <div id="resultScreen" class="screen hidden">
+            <h1>게임 종료!</h1>
+            <div class="result-stats">
+                <div class="stat-item">
+                    <div class="stat-label">최종 점수</div>
+                    <div class="stat-value" id="finalScore">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">정답률</div>
+                    <div class="stat-value" id="accuracy">0%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">정답 문제</div>
+                    <div class="stat-value" id="correctAnswers">0/0</div>
+                </div>
+            </div>
+            
+            <div id="newHighScore" class="new-high-score hidden">
+                🎉 새로운 최고 기록! 🎉
+            </div>
+            
+            <div class="result-buttons">
+                <button id="restartBtn" class="btn-primary">다시하기</button>
+                <button id="homeBtn" class="btn-secondary">홈으로</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

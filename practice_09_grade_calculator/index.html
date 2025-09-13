@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성적 계산기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>성적 계산기</h1>
+            <p>사용자 정의 성적 설정으로 가중평균 계산</p>
+        </header>
+
+        <main class="main">
+            <div class="calculator-layout">
+                <!-- 성적 입력 섹션 -->
+                <section class="grade-input-section">
+                    <div class="section-header">
+                        <h2>성적 추가</h2>
+                        <div class="input-mode-toggle">
+                            <label class="toggle-option">
+                                <input type="radio" name="inputMode" value="numerical" checked>
+                                <span>숫자 (0-100)</span>
+                            </label>
+                            <label class="toggle-option">
+                                <input type="radio" name="inputMode" value="letter">
+                                <span>문자 성적 (A-F)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <form class="grade-form" id="gradeForm">
+                        <div class="form-group">
+                            <label for="assignmentName">과제/과목명:</label>
+                            <input type="text" id="assignmentName" placeholder="예: 중간고사, 숙제 1" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="category">카테고리:</label>
+                                <select id="category">
+                                    <option value="exam">시험</option>
+                                    <option value="homework">숙제</option>
+                                    <option value="project">프로젝트</option>
+                                    <option value="quiz">퀴즈</option>
+                                    <option value="participation">참여</option>
+                                    <option value="other">기타</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="weight">가중치 (%):</label>
+                                <input type="number" id="weight" min="0" max="100" step="0.1" value="10" required>
+                            </div>
+                        </div>
+
+                        <!-- 숫자 성적 입력 -->
+                        <div class="grade-input numerical-input">
+                            <label for="numericalGrade">성적 (0-100):</label>
+                            <input type="number" id="numericalGrade" min="0" max="100" step="0.1" placeholder="85.5">
+                        </div>
+
+                        <!-- 문자 성적 입력 -->
+                        <div class="grade-input letter-input" style="display: none;">
+                            <label for="letterGrade">문자 성적:</label>
+                            <select id="letterGrade">
+                                <option value="">성적 선택</option>
+                                <option value="A+">A+ (97-100)</option>
+                                <option value="A">A (93-96)</option>
+                                <option value="A-">A- (90-92)</option>
+                                <option value="B+">B+ (87-89)</option>
+                                <option value="B">B (83-86)</option>
+                                <option value="B-">B- (80-82)</option>
+                                <option value="C+">C+ (77-79)</option>
+                                <option value="C">C (73-76)</option>
+                                <option value="C-">C- (70-72)</option>
+                                <option value="D+">D+ (67-69)</option>
+                                <option value="D">D (63-66)</option>
+                                <option value="D-">D- (60-62)</option>
+                                <option value="F">F (0-59)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="add-grade-btn">성적 추가</button>
+                    </form>
+
+                    <!-- Weight Templates -->
+                    <div class="weight-templates">
+                        <h3>빠른 템플릿</h3>
+                        <div class="template-buttons">
+                            <button class="template-btn" data-template="equal">동등 가중치</button>
+                            <button class="template-btn" data-template="exam-heavy">시험 중심</button>
+                            <button class="template-btn" data-template="homework-heavy">숙제 중심</button>
+                            <button class="template-btn" data-template="balanced">균형</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 성적 표 섹션 -->
+                <section class="grades-section">
+                    <div class="section-header">
+                        <h2>내 성적</h2>
+                        <div class="grades-actions">
+                            <button class="action-btn" id="clearAll">전체 삭제</button>
+                            <button class="action-btn" id="exportData">내보내기</button>
+                            <input type="file" id="importData" accept=".json" style="display: none;">
+                            <button class="action-btn" id="importBtn">가져오기</button>
+                        </div>
+                    </div>
+
+                    <div class="grades-table-container">
+                        <table class="grades-table" id="gradesTable">
+                            <thead>
+                                <tr>
+                                    <th>과제</th>
+                                    <th>카테고리</th>
+                                    <th>성적</th>
+                                    <th>가중치 (%)</th>
+                                    <th>가중 점수</th>
+                                    <th>작업</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gradesTableBody">
+                                <!-- 성적이 여기에 삽입됩니다 -->
+                            </tbody>
+                        </table>
+                        
+                        <div class="no-grades" id="noGrades">
+                            <p>아직 성적이 추가되지 않았습니다. 위에서 첫 성적을 추가해보세요!</p>
+                        </div>
+                    </div>
+
+                    <!-- 가중치 요약 -->
+                    <div class="weight-summary" id="weightSummary">
+                        <div class="summary-item">
+                            <span>총 가중치:</span>
+                            <span id="totalWeight">0%</span>
+                        </div>
+                        <div class="weight-status" id="weightStatus">
+                            <span class="status-text">가중치 상태를 보려면 성적을 추가하세요</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 결과 섹션 -->
+                <section class="results-section">
+                    <div class="section-header">
+                        <h2>성적 요약</h2>
+                    </div>
+
+                    <div class="results-grid">
+                        <div class="result-card main-result">
+                            <h3>가중평균</h3>
+                            <div class="grade-display">
+                                <span class="numerical-grade" id="finalGrade">--%</span>
+                                <span class="letter-grade" id="finalLetterGrade">--</span>
+                            </div>
+                            <div class="gpa-display">
+                                <span>GPA: </span>
+                                <span id="gpaValue">--</span>
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>통계</h3>
+                            <div class="stats-list">
+                                <div class="stat-item">
+                                    <span>최고 성적:</span>
+                                    <span id="highestGrade">--</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>최저 성적:</span>
+                                    <span id="lowestGrade">--</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>평균 성적:</span>
+                                    <span id="averageGrade">--</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>총 과제 수:</span>
+                                    <span id="totalAssignments">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>카테고리 분석</h3>
+                            <div class="category-breakdown" id="categoryBreakdown">
+                                <!-- 카테고리 통계가 여기에 표시됩니다 -->
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>목표 계산기</h3>
+                            <div class="goal-calculator">
+                                <div class="form-group">
+                                    <label for="targetGrade">목표 성적:</label>
+                                    <input type="number" id="targetGrade" min="0" max="100" placeholder="90">
+                                </div>
+                                <div class="form-group">
+                                    <label for="remainingWeight">남은 가중치 (%):</label>
+                                    <input type="number" id="remainingWeight" min="0" max="100" placeholder="20">
+                                </div>
+                                <button class="calculate-goal-btn" id="calculateGoal">필요 성적 계산</button>
+                                <div class="goal-result" id="goalResult"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 계산 세부사항 -->
+                    <div class="calculation-breakdown" id="calculationBreakdown">
+                        <h3>계산 세부사항</h3>
+                        <div class="breakdown-content">
+                            <!-- 계산 단계가 여기에 표시됩니다 -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- 성적 척도 모달 -->
+        <div class="modal" id="gradingScaleModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>성적 척도 설정</h2>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="scale-options">
+                        <label class="scale-option">
+                            <input type="radio" name="scale" value="standard" checked>
+                            <span>표준 척도</span>
+                        </label>
+                        <label class="scale-option">
+                            <input type="radio" name="scale" value="plus-minus">
+                            <span>플러스/마이너스 척도</span>
+                        </label>
+                        <label class="scale-option">
+                            <input type="radio" name="scale" value="custom">
+                            <span>사용자 정의 척도</span>
+                        </label>
+                    </div>
+                    
+                    <div class="scale-preview" id="scalePreview">
+                        <!-- 성적 척도 미리보기가 여기에 표시됩니다 -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary">취소</button>
+                    <button class="btn-primary">설정 저장</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 플로팅 액션 버튼 -->
+        <button class="fab" id="settingsFab" title="성적 척도 설정">
+            ⚙️
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
